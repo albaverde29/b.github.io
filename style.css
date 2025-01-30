@@ -1,0 +1,67 @@
+/* Stile base della pagina */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background-color: #2c3e50;
+    padding: 20px;
+    color: white;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 1em;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Stile della poesia */
+#poetry {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.verse {
+    font-size: 1.2em;
+    margin: 10px 0;
+    padding: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.verse:hover {
+    background-color: #f0e68c;
+}
+
+/* Tooltip */
+.verse[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    top: -30px;
+    left: 0;
+    width: auto;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
