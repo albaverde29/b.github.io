@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'infinito in AR - Senza Marker</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe-xr/src/index.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #tooltip {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pulsante per leggere la poesia -->
+    <button id="read-aloud">Leggi la poesia</button>
+
+    <!-- Tooltip per descrizione del verso -->
+    <div id="tooltip"></div>
+
+    <!-- Scena AR -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" xr-mode="inline">
+        <!-- Superficie piana dove il testo sarà ancorato -->
+        <a-entity id="plane" geometry="primitive: plane; width: 5; height: 3" position="0 0 -5" material="color: lightblue; opacity: 0.5"></a-entity>
+
+        <!-- Versi della poesia visualizzati nella scena -->
+        <a-text id="verse1" value="Sempre caro mi fu quest'ermo colle," color="#FFF" width="5" position="0 0.5 -5" class="verse" data-tooltip="Un luogo solitario che il poeta ama molto."></a-text>
+        <a-text id="verse2" value="E questa siepe, che da tanta parte" color="#FFF" width="5" position="0 0.2 -5" class="verse" data-tooltip="La siepe rappresenta il limite visibile."></a-text>
+        <a-text id="verse3" value="Del resto dell'orizzonte il guardo esclude." color="#FFF" width="5" position="0 -0.1 -5" class="verse" data-tooltip="Il poeta non vede oltre la siepe."></a-text>
+
+        <!-- Entità camera -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Funzione per la lettura della poesia ad alta voce
+        document.getElementById('read-aloud').addEventListener('click', function() {
+            const poetryText = [
+                "Sempre caro mi fu quest'ermo colle,",
+                "E questa siepe, che da tanta parte",
+                "Del resto dell'orizzonte il guardo esclude."
+            ];
+
+            const speech = new SpeechSynthesisUtterance(poetryText.join(' '));
+            speech.lang = 'it-IT';
+            window.speechSynthesis.speak(speech);
+        });
+
+        // Funzione per visualizzare il tooltip
+        const verses = document.querySelectorAll('.verse');
+        const tooltip = document.getElementById('tooltip');
+
+        verses.forEach(function(verse) {
+            verse.addEventListener('mouseenter', function() {
+                // Mostra il tooltip quando il mouse entra nel verso
+                const tooltipText = verse.getAttribute('data-tooltip');
+                tooltip.textContent = tooltipText;
+                tooltip.style.display = 'block'; // Mostra il tooltip
+            });
+
+            verse.addEventListener('mouseleave', function() {
+                // Nascondi il tooltip quando il mouse esce dal verso
+                tooltip.style.display = 'none';
+            });
+
+            verse.addEventListener('click', function() {
+                // Aggiungi una funzionalità per ascoltare il verso
+                const speech = new SpeechSynthesisUtterance(verse.textContent);
+                speech.lang = 'it-IT';
+                window.speechSynthesis.speak(speech);
+            });
+        });
+    </script>
+</body>
+</html>
