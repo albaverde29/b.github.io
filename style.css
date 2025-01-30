@@ -37,6 +37,8 @@ button:hover {
 #poetry {
     margin-top: 30px;
     padding: 20px;
+    display: inline-block;
+    text-align: left;
 }
 
 .verse {
@@ -45,6 +47,7 @@ button:hover {
     padding: 10px;
     transition: background-color 0.3s;
     cursor: pointer;
+    position: relative;
 }
 
 .verse:hover {
@@ -64,4 +67,5 @@ button:hover {
     width: auto;
     font-size: 0.9em;
     white-space: nowrap;
+    z-index: 10;
 }
